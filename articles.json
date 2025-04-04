@@ -2,7 +2,7 @@
   "articles": [
     {
       "id": 1,
-      "thumbnailUrl": "https://",
+      "thumbnailUrl": "https://example.com",
       "title": "Swift Concurrency: Como Usar Async/Await para Melhorar sua App iOS",
       "description": "Com o lançamento do Swift 5.5 e do iOS 15, a Apple introduziu uma das mudanças mais significativas na linguagem Swift: concurrency moderna com async/await. Essa novidade trouxe uma forma mais clara, segura e performática de lidar com código assíncrono, substituindo padrões antigos como closures aninhadas e completion handlers.",
       "createdAt": "2025-03-04",
