@@ -104,8 +104,8 @@
           "code": "@MainActor\nfunc updateUI() {\n    // código que atualiza a interface\n}"
         },
         {
-          "type": "Conclusão",
-          "value": "Boas práticas"
+          "type": "headline",
+          "value": "Conclusão"
         },
         {
           "type": "body",
