@@ -9,87 +9,107 @@
       "isVisible": true,
       "content": [
         {
+          "id": 1,
           "type": "body",
           "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
         },
         {
+          "id": 2,
           "type": "headline",
           "value": "Por que mudar? O problema das closures"
         },
         {
+          "id": 3,
           "type": "body",
           "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados. Isso frequentemente resultava em código confuso, difícil de testar e manter — o famoso 'pyramid of doom'."
         },
         {
+          "id": 4,
           "type": "code",
           "lang": "swift",
           "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
         },
         {
+          "id": 5,
           "type": "headline",
           "value": "A nova sintaxe com async/await"
         },
         {
+          "id": 6,
           "type": "body",
           "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
         },
         {
+          "id": 7,
           "type": "code",
           "lang": "swift",
           "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
         },
         {
+          "id": 8,
           "type": "body",
           "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
         },
         {
+          "id": 9,
           "type": "headline",
           "value": "Declarando funções assíncronas"
         },
         {
+          "id": 10,
           "type": "body",
           "value": "Para declarar uma função que pode ser usada com await, basta usar a palavra-chave async. Caso ela possa lançar erros, adicione também o throws."
         },
         {
+          "id": 11,
           "type": "code",
           "lang": "swift",
           "code": "func fetchData() async throws -> Data {\n    let url = URL(string: \"https://api.exemplo.com/data\")!\n    let (data, _) = try await URLSession.shared.data(from: url)\n    return data\n}"
         },
         {
+          "id": 12,
           "type": "headline",
           "value": "Trabalhando com Task e paralelismo"
         },
         {
+          "id": 13,
           "type": "body",
           "value": "Se você precisa executar várias tarefas em paralelo, pode usar Task e async let:"
         },
         {
+          "id": 14,
           "type": "code",
           "lang": "swift",
           "code": "func loadAllData() async throws {\n    async let user = getUser()\n    async let profile = getProfile(user)\n    async let posts = getPosts(profile)\n\n    let (userResult, profileResult, postsResult) = try await (user, profile, posts)\n}"
         },
         {
+          "id": 15,
           "type": "body",
           "value": "Dessa forma, as três funções são iniciadas ao mesmo tempo, e o await acontece só quando os dados forem realmente necessários."
         },
         {
+          "id": 16,
           "type": "headline",
           "value": "Integrando com código legado"
         },
         {
+          "id": 17,
           "type": "body",
           "value": "É possível adaptar funções baseadas em closures para usar async com o uso de withCheckedContinuation:"
         },
         {
+          "id": 18,
           "type": "code",
           "lang": "swift",
           "code": "func getUser() async -> User {\n    await withCheckedContinuation { continuation in\n        legacyGetUser { user in\n            continuation.resume(returning: user)\n        }\n    }\n}"
         },
         {
+          "id": 19,
           "type": "headline",
           "value": "Boas práticas"
         },
         {
+          "id": 20,
           "type": "list",
           "items": [
             "Use Task {} apenas quando realmente necessário (ex: iniciar tarefas em ViewModels).",
@@ -99,19 +119,23 @@
           ]
         },
         {
+          "id": 21,
           "type": "code",
           "lang": "swift",
           "code": "@MainActor\nfunc updateUI() {\n    // código que atualiza a interface\n}"
         },
         {
+          "id": 22,
           "type": "headline",
           "value": "Conclusão"
         },
         {
+          "id": 23,
           "type": "body",
           "value": "A nova API de concorrência em Swift representa um enorme avanço em clareza e segurança para o desenvolvimento iOS. Com async/await, o código se torna mais fácil de ler, manter e testar — ao mesmo tempo em que melhora a performance da aplicação por lidar melhor com threads e paralelismo."
         },
         {
+          "id": 24,
           "type": "body",
           "value": "Se você ainda não está usando essa abordagem, vale a pena começar a migrar pouco a pouco, principalmente em novos projetos ou funcionalidades."
         }
