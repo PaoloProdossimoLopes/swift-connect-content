@@ -1,5 +1,5 @@
 {
-  "version": "0.1.6",
+  "version": "0.1.7",
   "articles": [
     {
       "id": 1,
@@ -70,6 +70,73 @@
           "value": "Dominar Text, Image, Button, VStack e HStack é o alicerce para criar UIs envolventes com SwiftUI. Experimente, explore modificadores e veja como seus apps ganham vida com combinações criativas de layout."
         }
       ]
+    },
+    {
+  "id": 3,
+  "thumbnailUrl": "https://example.com/thumb3.png",
+  "title": "Navegação em SwiftUI com Exemplos Práticos",
+  "description": "Aprenda como usar NavigationView, NavigationLink e TabView com exemplos práticos de código SwiftUI para implementar navegação no seu app.",
+  "createdAt": "2025-04-05",
+  "isVisible": true,
+  "content": [
+    {
+      "id": 1,
+      "type": "headline",
+      "value": "Navegando Pelas Janelas do Seu App com Código: Exemplos Práticos em SwiftUI"
+    },
+    {
+      "id": 2,
+      "type": "body",
+      "value": "No post anterior, exploramos os conceitos de NavigationView, NavigationLink e TabView como pilares da navegação em aplicativos SwiftUI. Agora, vamos concretizar esses conceitos com exemplos de código simples que você pode experimentar."
+    },
+    {
+      "id": 3,
+      "type": "headline",
+      "value": "Exemplo de NavigationView e NavigationLink"
+    },
+    {
+      "id": 4,
+      "type": "body",
+      "value": "O NavigationView estabelece o contexto para a navegação hierárquica, e o NavigationLink permite a transição para uma nova tela. Veja um exemplo básico:"
+    },
+    {
+      "id": 5,
+      "type": "code",
+      "lang": "swift",
+      "code": "import SwiftUI\n\nstruct TelaInicial: View {\n    var body: some View {\n        NavigationView {\n            VStack {\n                Text(\"Tela Inicial\")\n                    .font(.largeTitle)\n                    .padding()\n\n                // NavigationLink para a Tela Detalhe\n                NavigationLink(destination: TelaDetalhe()) {\n                    Text(\"**Ir para Detalhes**\")\n                        .padding()\n                        .background(Color.blue)\n                        .foregroundColor(.white)\n                        .cornerRadius(10)\n                }\n                .padding()\n            }\n            .navigationTitle(\"Meu App\")\n        }\n    }\n}\n\nstruct TelaDetalhe: View {\n    var body: some View {\n        VStack {\n            Text(\"**Tela de Detalhes**\")\n                .font(.title)\n                .padding()\n            Text(\"Informações adicionais aqui...\")\n                .padding()\n        }\n        .navigationTitle(\"Detalhes\")\n    }\n}"
+    },
+    {
+      "id": 6,
+      "type": "body",
+      "value": "Neste exemplo:\n- A TelaInicial está dentro de um NavigationView, o que habilita a funcionalidade de navegação.\n- O NavigationLink envolve um Text que funciona como um botão.\n- O parâmetro destination: do NavigationLink define a TelaDetalhe.\n- .navigationTitle() define o título da barra de navegação de cada tela."
+    },
+    {
+      "id": 7,
+      "type": "headline",
+      "value": "Exemplo de TabView"
+    },
+    {
+      "id": 8,
+      "type": "body",
+      "value": "O TabView é usado para organizar seu aplicativo em diferentes seções, acessíveis através de abas. Veja um exemplo:"
+    },
+    {
+      "id": 9,
+      "type": "code",
+      "lang": "swift",
+      "code": "import SwiftUI\n\nstruct ContentView: View {\n    var body: some View {\n        TabView {\n            // Primeira Aba\n            TelaPrincipal()\n                .tabItem {\n                    Label(\"Principal\", systemImage: \"house.fill\")\n                }\n\n            // Segunda Aba\n            TelaConfiguracoes()\n                .tabItem {\n                    Label(\"Configurações\", systemImage: \"gearshape.fill\")\n                }\n\n            // Terceira Aba\n            TelaHistorico()\n                .tabItem {\n                    Label(\"Histórico\", systemImage: \"clock.fill\")\n                }\n        }\n    }\n}\n\nstruct TelaPrincipal: View {\n    var body: some View {\n        Text(\"**Tela Principal do App**\")\n            .font(.title)\n    }\n}\n\nstruct TelaConfiguracoes: View {\n    var body: some View {\n        Text(\"**Configurações do Usuário**\")\n            .font(.title)\n    }\n}\n\nstruct TelaHistorico: View {\n    var body: some View {\n        Text(\"**Histórico de Atividades**\")\n            .font(.title)\n    }\n}"
+    },
+    {
+      "id": 10,
+      "type": "body",
+      "value": "Neste exemplo:\n- A ContentView é um TabView com três abas.\n- Cada aba é definida por uma visualização separada.\n- O modificador .tabItem associa um rótulo com texto e ícone do sistema à aba."
+    },
+    {
+      "id": 11,
+      "type": "body",
+      "value": "É importante notar que estes são exemplos básicos. Em aplicativos reais, as visualizações seriam muito mais complexas e interativas. Experimente modificar esses exemplos e explore os modificadores disponíveis para personalizar a navegação do seu app SwiftUI."
     }
+  ]
+}
   ]
 }
