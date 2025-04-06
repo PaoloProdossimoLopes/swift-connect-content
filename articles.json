@@ -1,11 +1,9 @@
 {
   "articles": [
     {
-      "id": 1,
       "thumbnailUrl": "https://example.com",
-      "title": "Swift Concurrency: Como Usar Async/Await para Melhorar sua App iOS",
-      "description": "Com o lançamento do Swift 5.5 e do iOS 15, a Apple introduziu uma das mudanças mais significativas na linguagem Swift: concurrency moderna com async/await. Essa novidade trouxe uma forma mais clara, segura e performática de lidar com código assíncrono, substituindo padrões antigos como closures aninhadas e completion handlers.",
-      "createdAt": "2025-03-04",
+      "title": "SwiftUI: Criando Interfaces Declarativas",
+      "description": "Este artigo explora o tema 'SwiftUI: Criando Interfaces Declarativas' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
       "isVisible": true,
       "content": [
         {
@@ -21,7 +19,7 @@
         {
           "id": 3,
           "type": "body",
-          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados. Isso frequentemente resultava em código confuso, difícil de testar e manter — o famoso 'pyramid of doom'."
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
         },
         {
           "id": 4,
@@ -49,97 +47,2558 @@
           "id": 8,
           "type": "body",
           "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
-        },
-        {
-          "id": 9,
-          "type": "headline",
-          "value": "Declarando funções assíncronas"
-        },
-        {
-          "id": 10,
-          "type": "body",
-          "value": "Para declarar uma função que pode ser usada com await, basta usar a palavra-chave async. Caso ela possa lançar erros, adicione também o throws."
-        },
-        {
-          "id": 11,
-          "type": "code",
-          "lang": "swift",
-          "code": "func fetchData() async throws -> Data {\n    let url = URL(string: \"https://api.exemplo.com/data\")!\n    let (data, _) = try await URLSession.shared.data(from: url)\n    return data\n}"
-        },
-        {
-          "id": 12,
-          "type": "headline",
-          "value": "Trabalhando com Task e paralelismo"
-        },
-        {
-          "id": 13,
-          "type": "body",
-          "value": "Se você precisa executar várias tarefas em paralelo, pode usar Task e async let:"
-        },
-        {
-          "id": 14,
-          "type": "code",
-          "lang": "swift",
-          "code": "func loadAllData() async throws {\n    async let user = getUser()\n    async let profile = getProfile(user)\n    async let posts = getPosts(profile)\n\n    let (userResult, profileResult, postsResult) = try await (user, profile, posts)\n}"
-        },
-        {
-          "id": 15,
-          "type": "body",
-          "value": "Dessa forma, as três funções são iniciadas ao mesmo tempo, e o await acontece só quando os dados forem realmente necessários."
-        },
-        {
-          "id": 16,
-          "type": "headline",
-          "value": "Integrando com código legado"
-        },
-        {
-          "id": 17,
-          "type": "body",
-          "value": "É possível adaptar funções baseadas em closures para usar async com o uso de withCheckedContinuation:"
-        },
-        {
-          "id": 18,
-          "type": "code",
-          "lang": "swift",
-          "code": "func getUser() async -> User {\n    await withCheckedContinuation { continuation in\n        legacyGetUser { user in\n            continuation.resume(returning: user)\n        }\n    }\n}"
-        },
-        {
-          "id": 19,
-          "type": "headline",
-          "value": "Boas práticas"
-        },
-        {
-          "id": 20,
-          "type": "list",
-          "items": [
-            "Use Task {} apenas quando realmente necessário (ex: iniciar tarefas em ViewModels).",
-            "Evite misturar async/await com closures antigas sem necessidade.",
-            "Prefira structured concurrency para evitar vazamentos de memória.",
-            "Utilize MainActor para atualizar a UI com segurança:"
-          ]
-        },
-        {
-          "id": 21,
-          "type": "code",
-          "lang": "swift",
-          "code": "@MainActor\nfunc updateUI() {\n    // código que atualiza a interface\n}"
-        },
-        {
-          "id": 22,
-          "type": "headline",
-          "value": "Conclusão"
-        },
-        {
-          "id": 23,
-          "type": "body",
-          "value": "A nova API de concorrência em Swift representa um enorme avanço em clareza e segurança para o desenvolvimento iOS. Com async/await, o código se torna mais fácil de ler, manter e testar — ao mesmo tempo em que melhora a performance da aplicação por lidar melhor com threads e paralelismo."
-        },
-        {
-          "id": 24,
-          "type": "body",
-          "value": "Se você ainda não está usando essa abordagem, vale a pena começar a migrar pouco a pouco, principalmente em novos projetos ou funcionalidades."
         }
-      ]
+      ],
+      "id": 1,
+      "createdAt": "2025-03-05"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Combine: Programação Reativa no iOS",
+      "description": "Este artigo explora o tema 'Combine: Programação Reativa no iOS' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 2,
+      "createdAt": "2025-03-06"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Persistência com Core Data em Swift",
+      "description": "Este artigo explora o tema 'Persistência com Core Data em Swift' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 3,
+      "createdAt": "2025-03-07"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Boas Práticas de Arquitetura em Swift",
+      "description": "Este artigo explora o tema 'Boas Práticas de Arquitetura em Swift' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 4,
+      "createdAt": "2025-03-08"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Unit Tests em Aplicativos Swift",
+      "description": "Este artigo explora o tema 'Unit Tests em Aplicativos Swift' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 5,
+      "createdAt": "2025-03-09"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Usando Swift Package Manager com Projetos iOS",
+      "description": "Este artigo explora o tema 'Usando Swift Package Manager com Projetos iOS' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 6,
+      "createdAt": "2025-03-10"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Criando Custom Views com UIViewRepresentable",
+      "description": "Este artigo explora o tema 'Criando Custom Views com UIViewRepresentable' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 7,
+      "createdAt": "2025-03-11"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Concurrency com Task Groups em Swift",
+      "description": "Este artigo explora o tema 'Concurrency com Task Groups em Swift' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 8,
+      "createdAt": "2025-03-12"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Integrando Swift com Objective-C",
+      "description": "Este artigo explora o tema 'Integrando Swift com Objective-C' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 9,
+      "createdAt": "2025-03-13"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Entendendo o ciclo de vida em apps SwiftUI",
+      "description": "Este artigo explora o tema 'Entendendo o ciclo de vida em apps SwiftUI' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 10,
+      "createdAt": "2025-03-14"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Como usar Property Wrappers em Swift",
+      "description": "Este artigo explora o tema 'Como usar Property Wrappers em Swift' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 11,
+      "createdAt": "2025-03-15"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Melhorando performance com Instruments",
+      "description": "Este artigo explora o tema 'Melhorando performance com Instruments' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 12,
+      "createdAt": "2025-03-16"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Modularizando seu projeto Swift",
+      "description": "Este artigo explora o tema 'Modularizando seu projeto Swift' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 13,
+      "createdAt": "2025-03-17"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Design Patterns comuns em Swift",
+      "description": "Este artigo explora o tema 'Design Patterns comuns em Swift' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 14,
+      "createdAt": "2025-03-18"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Documentando código com DocC",
+      "description": "Este artigo explora o tema 'Documentando código com DocC' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 15,
+      "createdAt": "2025-03-19"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Gerenciando Estado com State e Binding",
+      "description": "Este artigo explora o tema 'Gerenciando Estado com State e Binding' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 16,
+      "createdAt": "2025-03-20"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Networking com URLSession e Codable",
+      "description": "Este artigo explora o tema 'Networking com URLSession e Codable' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 17,
+      "createdAt": "2025-03-21"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Testes de UI com XCTest",
+      "description": "Este artigo explora o tema 'Testes de UI com XCTest' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 18,
+      "createdAt": "2025-03-22"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Animações em SwiftUI: Do básico ao avançado",
+      "description": "Este artigo explora o tema 'Animações em SwiftUI: Do básico ao avançado' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 19,
+      "createdAt": "2025-03-23"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Criação de DSLs com Swift",
+      "description": "Este artigo explora o tema 'Criação de DSLs com Swift' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 20,
+      "createdAt": "2025-03-24"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "App Clips com Swift",
+      "description": "Este artigo explora o tema 'App Clips com Swift' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 21,
+      "createdAt": "2025-03-25"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Como usar Result Builders",
+      "description": "Este artigo explora o tema 'Como usar Result Builders' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 22,
+      "createdAt": "2025-03-26"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Tratamento de erros em Swift moderno",
+      "description": "Este artigo explora o tema 'Tratamento de erros em Swift moderno' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 23,
+      "createdAt": "2025-03-27"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Criando bibliotecas reutilizáveis com Swift",
+      "description": "Este artigo explora o tema 'Criando bibliotecas reutilizáveis com Swift' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 24,
+      "createdAt": "2025-03-28"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Gestão de dependências com CocoaPods e SPM",
+      "description": "Este artigo explora o tema 'Gestão de dependências com CocoaPods e SPM' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 25,
+      "createdAt": "2025-03-29"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Frameworks nativos úteis: Foundation, UIKit e SwiftUI",
+      "description": "Este artigo explora o tema 'Frameworks nativos úteis: Foundation, UIKit e SwiftUI' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 26,
+      "createdAt": "2025-03-30"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Decodificando JSON com Swift Codable",
+      "description": "Este artigo explora o tema 'Decodificando JSON com Swift Codable' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 27,
+      "createdAt": "2025-03-31"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "NavigationStack em SwiftUI",
+      "description": "Este artigo explora o tema 'NavigationStack em SwiftUI' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 28,
+      "createdAt": "2025-04-01"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "SwiftData: A nova maneira de persistência",
+      "description": "Este artigo explora o tema 'SwiftData: A nova maneira de persistência' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 29,
+      "createdAt": "2025-04-02"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Reatividade com async/await e Combine",
+      "description": "Este artigo explora o tema 'Reatividade com async/await e Combine' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 30,
+      "createdAt": "2025-04-03"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Interoperabilidade Swift e Objective-C",
+      "description": "Este artigo explora o tema 'Interoperabilidade Swift e Objective-C' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 31,
+      "createdAt": "2025-04-04"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Composição de Views reutilizáveis",
+      "description": "Este artigo explora o tema 'Composição de Views reutilizáveis' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 32,
+      "createdAt": "2025-04-05"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Gerenciando temas e dark mode em SwiftUI",
+      "description": "Este artigo explora o tema 'Gerenciando temas e dark mode em SwiftUI' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 33,
+      "createdAt": "2025-04-06"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Criando animações com matchedGeometryEffect",
+      "description": "Este artigo explora o tema 'Criando animações com matchedGeometryEffect' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 34,
+      "createdAt": "2025-04-07"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Combinando MapKit e SwiftUI",
+      "description": "Este artigo explora o tema 'Combinando MapKit e SwiftUI' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 35,
+      "createdAt": "2025-04-08"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Layout adaptativo com GeometryReader",
+      "description": "Este artigo explora o tema 'Layout adaptativo com GeometryReader' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 36,
+      "createdAt": "2025-04-09"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Arquitetura MVVM com SwiftUI",
+      "description": "Este artigo explora o tema 'Arquitetura MVVM com SwiftUI' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 37,
+      "createdAt": "2025-04-10"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Usando @MainActor corretamente",
+      "description": "Este artigo explora o tema 'Usando @MainActor corretamente' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 38,
+      "createdAt": "2025-04-11"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Explorando Swift Macros",
+      "description": "Este artigo explora o tema 'Explorando Swift Macros' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 39,
+      "createdAt": "2025-04-12"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Como lidar com dependências em Swift",
+      "description": "Este artigo explora o tema 'Como lidar com dependências em Swift' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 40,
+      "createdAt": "2025-04-13"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Criando DSLs para configuração de UI",
+      "description": "Este artigo explora o tema 'Criando DSLs para configuração de UI' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 41,
+      "createdAt": "2025-04-14"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Técnicas de debugging em Swift",
+      "description": "Este artigo explora o tema 'Técnicas de debugging em Swift' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 42,
+      "createdAt": "2025-04-15"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Aplicando TDD em desenvolvimento iOS",
+      "description": "Este artigo explora o tema 'Aplicando TDD em desenvolvimento iOS' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 43,
+      "createdAt": "2025-04-16"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Transformando dados com Combine",
+      "description": "Este artigo explora o tema 'Transformando dados com Combine' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 44,
+      "createdAt": "2025-04-17"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Desempenho em listas grandes no SwiftUI",
+      "description": "Este artigo explora o tema 'Desempenho em listas grandes no SwiftUI' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 45,
+      "createdAt": "2025-04-18"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Explorando a API Vision com Swift",
+      "description": "Este artigo explora o tema 'Explorando a API Vision com Swift' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 46,
+      "createdAt": "2025-04-19"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Gerando previews eficientes em SwiftUI",
+      "description": "Este artigo explora o tema 'Gerando previews eficientes em SwiftUI' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 47,
+      "createdAt": "2025-04-20"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Carregamento sob demanda com LazyVStack",
+      "description": "Este artigo explora o tema 'Carregamento sob demanda com LazyVStack' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 48,
+      "createdAt": "2025-04-21"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Usando Task.cancel() corretamente",
+      "description": "Este artigo explora o tema 'Usando Task.cancel() corretamente' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 49,
+      "createdAt": "2025-04-22"
+    },
+    {
+      "thumbnailUrl": "https://example.com",
+      "title": "Controle de acesso com fileprivate e internal",
+      "description": "Este artigo explora o tema 'Controle de acesso com fileprivate e internal' no contexto do desenvolvimento iOS com Swift, abordando práticas, conceitos e exemplos aplicados ao dia a dia do desenvolvedor.",
+      "isVisible": true,
+      "content": [
+        {
+          "id": 1,
+          "type": "body",
+          "value": "Neste artigo, vamos explorar os fundamentos da nova API de concorrência, como usá-la no desenvolvimento iOS e quais são as boas práticas para garantir uma aplicação mais fluida e com menos bugs."
+        },
+        {
+          "id": 2,
+          "type": "headline",
+          "value": "Por que mudar? O problema das closures"
+        },
+        {
+          "id": 3,
+          "type": "body",
+          "value": "Antes da introdução de async/await, desenvolvedores iOS usavam closures para operações assíncronas, como chamadas de rede ou acesso a banco de dados."
+        },
+        {
+          "id": 4,
+          "type": "code",
+          "lang": "swift",
+          "code": "getUser { user in\n    getProfile(user) { profile in\n        getPosts(profile) { posts in\n            // lógica aqui\n        }\n    }\n}"
+        },
+        {
+          "id": 5,
+          "type": "headline",
+          "value": "A nova sintaxe com async/await"
+        },
+        {
+          "id": 6,
+          "type": "body",
+          "value": "Com a nova abordagem, podemos reescrever o exemplo acima de forma muito mais limpa:"
+        },
+        {
+          "id": 7,
+          "type": "code",
+          "lang": "swift",
+          "code": "func loadUserData() async throws {\n    let user = try await getUser()\n    let profile = try await getProfile(user)\n    let posts = try await getPosts(profile)\n    // lógica aqui\n}"
+        },
+        {
+          "id": 8,
+          "type": "body",
+          "value": "Cada chamada é executada de forma assíncrona, mas o código parece síncrono. Isso facilita a leitura e reduz a chance de erros."
+        }
+      ],
+      "id": 50,
+      "createdAt": "2025-04-23"
     }
   ]
 }
